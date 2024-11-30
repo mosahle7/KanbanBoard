@@ -15,19 +15,35 @@ function App() {
       <Button onClick={toggleBox}>
   
         <img src="/assets/Display.svg" alt="Display" style={display} />
-        <Label htmlFor="dropdown">Display</Label>
+        <Display htmlFor="dropdown">Display</Display>
         <img src="/assets/down.svg" alt="Display" style={display} />
-        {showBox && (
-          <div style={boxStyle}>
-            <div>
-              <div>Grouping</div>
-              <div>Ordering</div>
-
-
-            </div>
-          </div>
-        )}
       </Button>
+
+      {/* {showBox && ( */}
+          <Box>
+          <BoxEle>
+          <label htmlFor="grouping">Grouping</label>
+          <GDropdown id="grouping">
+            <option value="status">Status</option>
+            <option value="user">User</option>
+            <option value="priority">Priority</option>
+          </GDropdown>
+          </BoxEle>
+
+          <BoxEle>
+          <label htmlFor="ordering">Ordering</label>
+          <ODropdown id="ordering">
+            <option value="status">Status</option>
+            <option value="user">User</option>
+            <option value="priority">Priority</option>
+          </ODropdown>
+          </BoxEle>
+  
+              
+
+           
+          </Box>
+        {/* )} */}
     </Header>
       
     </>
@@ -39,10 +55,9 @@ const Header = styled.header`
   left: 0;                    // Position it flush with the left
   width: 100%;               // Make it span the full width of the viewport
   height: 80px;              // Set a fixed height
-  background-Color: #f5f5f5;   // Set background color
+  background-color: white;   // Set background color
   boxShadow: 0px 2px 5px rgba(0, 0, 0, 0.1); // Optional shadow for design
   zIndex: 1000;
-  backgroundColor: #f5f5f5;
 `;
 
 
@@ -61,17 +76,57 @@ const Button = styled.button`
   margin-bottom: 20px;  
   `;
 
-const Label = styled.label`
+const Display = styled.div`
   margin-left: 7px;           /* Add right margin */
   margin-right: 7px;
   `;
 
 const display = {
 
+
 };
 
-const boxStyle = {
-};
+const Box = styled.div`
+  height: 100px;
+  width: 20%;
+  margin-left: 70px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 16px;
+  justify-content: space-evenly;
+
+`;
+
+const BoxEle = styled.div `
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: grey;
+  // margin-bottom: 10px;
+`;
+
+const GDropdown = styled.select`
+  margin-left: 100px;
+  height: 35px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  // flex-grow: 1;
+`;
+
+const ODropdown = styled.select`
+  margin-left: 102px;
+  height: 35px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  // flex-grow: 1;
+`;
 const dropdownContainerStyle = {
   // display: 'inline-block',
   // backgroundColor: '#fff',
