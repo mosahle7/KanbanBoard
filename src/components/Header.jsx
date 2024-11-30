@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef} from 'react'
 import styled from 'styled-components';
 
-export const Header = () => {
+export const Header = ({setGrouping, setOrdering}) => {
 
 const  [showBox, setShowBox] = useState(false);
 const boxRef = useRef(null);
@@ -48,7 +48,7 @@ const buttonRef = useRef(null);
           <Box ref={boxRef}>
           <BoxEle>
           <label htmlFor="grouping">Grouping</label>
-          <GDropdown id="grouping">
+          <GDropdown id="grouping" onChange={(e) => setGrouping(e.target.value)}>
             <option value="status">Status</option>
             <option value="user">User</option>
             <option value="priority">Priority</option>
@@ -57,7 +57,7 @@ const buttonRef = useRef(null);
 
           <BoxEle>
           <label htmlFor="ordering">Ordering</label>
-          <ODropdown id="ordering">
+          <ODropdown id="ordering" onChange={(e) => setOrdering(e.target.value)}>
             <option value="priority">Priority</option>
             <option value="title">Title</option>
           </ODropdown>
