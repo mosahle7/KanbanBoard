@@ -41,15 +41,6 @@ const buttonRef = useRef(null);
   }, [showBox]);
 
 
-
-  // useEffect (() => {
-  //   const testFetch = async () => {
-  //     const data = await fetcher();
-  //     console.log(data);
-  //   };
-  // testFetch();
-  // },[]);
-
   return (
     <>
     <Content>
@@ -102,21 +93,21 @@ const Content = styled.header`
 
 const Button = styled.button`
   display: flex;                /* Use flexbox to arrange elements side by side */
-  align-items: center;          /* Vertically center the elements */
-  background-color: white;    /* Set a light background color */
-  border-radius: 8px;           /* Radius for rounded corners */
-  padding: 8px 16px;            /* Padding inside the button */
-  border: none;                 /* Remove default border */
-  cursor: pointer;              /* Change cursor to indicate it's clickable */
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for a softer look */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
-  margin-left: 45px;            /* Add left margin */
-  margin-top: 20px;           /* Add right margin */
+  align-items: center;          
+  background-color: white;    
+  border-radius: 8px;           
+  padding: 8px 16px;            
+  border: none;                 
+  cursor: pointer;             
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease; 
+  margin-left: 45px;            
+  margin-top: 20px;           
   margin-bottom: 20px;  
   `;
 
 const Display = styled.div`
-  margin-left: 7px;           /* Add right margin */
+  margin-left: 7px;          
   margin-right: 7px;
   `;
 

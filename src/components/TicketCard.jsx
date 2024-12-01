@@ -82,10 +82,10 @@ export const TicketCard = ({ticket, showUser, showPriority}) => {
 }
 const Container = styled.div`
   border-radius: 10px;
-  padding: 20px; /* 
-  margin: 10px 0; /* Vertical margin between cards */
-  background-color: white; /* White background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for the card */
+  padding: 20px; 
+  margin: 10px 0; 
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   height: 110px;
   width: 200px;
   display: flex;
@@ -119,7 +119,7 @@ const StatusIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px; /* Space between the icon and the title */
+  margin-right: 10px;
 `;
 
 const User = styled.div`
@@ -146,9 +146,9 @@ const Priority = styled.div`
     border: 0.5px solid #e8e8e8;
     border-radius: 5px;
     display: flex;
-    justify-content: center;  /* Horizontally centers the content */
-    align-items: center;  /* Vertically centers the content */
-    padding: 5px;  /* Optional: Adds padding around the image */
+    justify-content: center;  
+    align-items: center;  
+    padding: 5px;  
 
 
     img {
@@ -156,22 +156,22 @@ const Priority = styled.div`
     }
 `
 const Tag = styled.div`
-    border: 1px solid #e8e8e8; /* Light gray border */
-    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
     margin-left: 10px;
-    font-size: 0.9em; /* Font size of the tag */
+    font-size: 0.9em; 
     display: flex;
-    justify-content: center;  /* Horizontally centers the text */
-    align-items: center;  /* Vertically centers the text */
-    padding: 5px;  /* Optional: Adds padding around the text */
+    justify-content: center; 
+    align-items: center;  
+    padding: 5px;  
 `
 const Circle = styled.div`
   width: 12px;
   height: 12px;
   margin-bottom: 2px;
-  background-color: grey; /* Grey color */
-  border-radius: 50%; /* Make it circular */
-  margin-right: 8px; /* Add some space between the circle and the tag */
+  background-color: grey; 
+  border-radius: 50%; 
+  margin-right: 8px; 
 `;
 
 
