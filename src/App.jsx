@@ -7,9 +7,15 @@ import { Board } from './components/Board';
 function App() {
   const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
-  const [grouping, setGrouping] = useState('status');
-  const [ordering, setOrdering] = useState('priority');
-
+  const [grouping, setGrouping] = useState(() => {
+    const savedGrouping = localStorage.getItem('grouping');
+    return savedGrouping ? savedGrouping : 'status'; // Fallback to 'status' if not found
+  });
+  const [ordering, setOrdering] = useState(() => {
+    const savedOrdering = localStorage.getItem('ordering');
+    return savedOrdering ? savedOrdering : 'priority'; // Fallback to 'priority' if not found
+  });
+  
   useEffect(() => {
     const fetchTickets = async () => {
       const data = await fetcher();
@@ -19,6 +25,16 @@ function App() {
 
     fetchTickets();
   }, []); 
+
+  useEffect(() => {
+    if (grouping) {
+      localStorage.setItem('grouping', grouping);
+    }
+    if (ordering) {
+      localStorage.setItem('ordering', ordering);
+    }
+  }, [grouping, ordering]);
+  
 
   return (
     <>

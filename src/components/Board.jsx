@@ -1,7 +1,40 @@
+import { useState , useEffect} from "react";
 import { TicketCard } from "./TicketCard";
 import styled from "styled-components";
 
 export const Board = ({tickets, users, grouping, ordering}) => {
+    const [currentGrouping, setCurrentGrouping] = useState(() => {
+        const savedGrouping = localStorage.getItem('grouping');
+        return savedGrouping ? savedGrouping : grouping; // Use localStorage value if available, else fall back to prop
+      });
+      
+      const [currentOrdering, setCurrentOrdering] = useState(() => {
+        const savedOrdering = localStorage.getItem('ordering');
+        return savedOrdering ? savedOrdering : ordering; // Use localStorage value if available, else fall back to prop
+      });
+   
+
+    // Load settings from localStorage on initial load
+    useEffect(() => {
+    const savedGrouping = localStorage.getItem('grouping');
+    const savedOrdering = localStorage.getItem('ordering');
+
+    if (savedGrouping) setCurrentGrouping(savedGrouping);
+    if (savedOrdering) setCurrentOrdering(savedOrdering);
+    }, []);
+
+  // Save settings to localStorage whenever they change
+
+    useEffect(() => {
+        if (currentGrouping !== undefined) {
+            localStorage.setItem('grouping', currentGrouping);
+        }
+        if (currentOrdering !== undefined) {
+            localStorage.setItem('ordering', currentOrdering);
+        }
+    }, [currentGrouping, currentOrdering]);
+
+
     const predefinedGroups = {
         status: ["Backlog", "Todo", "In progress", "Done", "Cancelled"],
         priority: ["No Priority", "Urgent", "High", "Medium", "Low"],
@@ -14,11 +47,35 @@ export const Board = ({tickets, users, grouping, ordering}) => {
         1: "Low",
         0: "No Priority",
     };
+
+    const priorityIcons = {
+        "No Priority": "assets/No-priority.svg",
+        "Urgent": "assets/SVG - Urgent Priority colour.svg",
+        "High": "assets/Img - High Priority.svg",
+        "Medium": "assets/Img - Medium Priority.svg",
+        "Low": "assets/Img - Low Priority.svg",
+    };
+
+    const statusIcons = {
+        "Backlog": "assets/Backlog.svg",
+        "Todo": "assets/To-do.svg",
+        "In progress": "assets/in-progress.svg",
+        "Done": "assets/Done.svg",
+        "Cancelled": "assets/Cancelled.svg",
+    };
+
+    const getIcon = (groupKey) => {
+        if (predefinedGroups.status.includes(groupKey)) {
+            return statusIcons[groupKey];
+        }
+        if (predefinedGroups.priority.includes(groupKey)) {
+            return priorityIcons[groupKey];
+        }
+        return null;
+    };
+
     const getUserName = (userId) => {
         const user = users.find(user=>user.id === userId);
-        console.log("Users", users);
-        console.log(user.name,user.id);
-        console.log(userId);
         return user ? user.name : "Unknown";
     };
 
@@ -82,7 +139,24 @@ export const Board = ({tickets, users, grouping, ordering}) => {
              */}
              {Object.entries(groupedTasks).map(([groupKey, groupTasks]) => (
                   <Group key={groupKey}>
-                  <GroupTitle>{groupKey}</GroupTitle>
+                  <GroupTitle>
+                    <GroupTitleLeft>
+                    {getIcon(groupKey) && (
+                    <img
+                    src={getIcon(groupKey)}
+                    alt={`${groupKey} icon`}
+                    width="15"
+                    />
+                    )}
+                    {groupKey} 
+                    <GroupTitleNumber>{groupTasks.length}</GroupTitleNumber>
+                    </GroupTitleLeft>
+                    <GroupTitleRight>
+                    <img src="assets/add.svg" alt="Add Icon" width="18" />
+                    <img src="assets/3 dot menu.svg" alt="Menu Icon" width="18" />
+                    </GroupTitleRight>
+
+                    </GroupTitle>
                   {groupTasks.length > 0 &&
                       groupTasks.map((task) => (
                           <TicketCard key={task.id} ticket={task} />
@@ -102,19 +176,43 @@ const Container = styled.div`
     gap: 20px;
     padding: 20px;
     background-color: #f7f7f7;
-    padding-top: 150px;
+    padding-top: 100px;
     box-sizing: border-box; /* Include padding and border in width calculation */
 `;
 
 const Group = styled.div`
-  flex: 1 1 300px; /* Allow groups to grow and shrink, with a minimum width of 300px */
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align content to the start */
+  width: 100%;
 `;
 
 const GroupTitle = styled.div`
   margin-bottom: 20px;
+  margin-left: 10px;
   font-weight: 500; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  `;
+
+  const GroupTitleLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px; 
 `;
 
+const GroupTitleRight = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  gap: 10px;
+`;
+
+const GroupTitleNumber = styled.span`
+  color: grey; 
+  font-weight: bold;
+  margin-left: 6px; 
+`;

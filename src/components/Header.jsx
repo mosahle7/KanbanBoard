@@ -4,12 +4,28 @@ import styled from 'styled-components';
 export const Header = ({setGrouping, setOrdering}) => {
 
 const  [showBox, setShowBox] = useState(false);
+const [savedGrouping, setSavedGrouping] = useState(localStorage.getItem('grouping') || 'status');
+const [savedOrdering, setSavedOrdering] = useState(localStorage.getItem('ordering') || 'priority');
+  
+
 const boxRef = useRef(null);
 const buttonRef = useRef(null);
 
   const toggleBox = () => {
     setShowBox(!showBox);
-  }
+  };
+
+  const handleGroupingChange = (e) => {
+    setGrouping(e.target.value);
+    setSavedGrouping(e.target.value);  // Store it in state
+    localStorage.setItem('grouping', e.target.value);  // Save to localStorage
+  };
+
+  const handleOrderingChange = (e) => {
+    setOrdering(e.target.value);
+    setSavedOrdering(e.target.value);  // Store it in state
+    localStorage.setItem('ordering', e.target.value);  // Save to localStorage
+  };
 
   useEffect(() => {
     const handleClickOutside = (ev) => {
@@ -48,7 +64,7 @@ const buttonRef = useRef(null);
           <Box ref={boxRef}>
           <BoxEle>
           <label htmlFor="grouping">Grouping</label>
-          <GDropdown id="grouping" onChange={(e) => setGrouping(e.target.value)}>
+          <GDropdown id="grouping" value={savedGrouping} onChange={handleGroupingChange}>
             <option value="status">Status</option>
             <option value="user">User</option>
             <option value="priority">Priority</option>
@@ -57,7 +73,7 @@ const buttonRef = useRef(null);
 
           <BoxEle>
           <label htmlFor="ordering">Ordering</label>
-          <ODropdown id="ordering" onChange={(e) => setOrdering(e.target.value)}>
+          <ODropdown id="ordering" value={savedOrdering} onChange={handleOrderingChange}>
             <option value="priority">Priority</option>
             <option value="title">Title</option>
           </ODropdown>
@@ -135,8 +151,9 @@ const BoxEle = styled.div `
 `;
 
 const GDropdown = styled.select`
-  margin-left: 100px;
+  margin-left: 90px;
   height: 35px;
+  width: 100px;
   padding: 8px;
   font-size: 14px;
   border-radius: 5px;
@@ -146,8 +163,9 @@ const GDropdown = styled.select`
 `;
 
 const ODropdown = styled.select`
-  margin-left: 102px;
+  margin-left: 92px;
   height: 35px;
+  width: 100px;
   padding: 8px;
   font-size: 14px;
   border-radius: 5px;

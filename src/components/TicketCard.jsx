@@ -1,4 +1,3 @@
-// import './TicketCard.css'; 
 import styled from "styled-components";
 import UrgenPriority from '/assets/SVG - Urgent Priority grey.svg';
 import HighPriority from '/assets/Img - High Priority.svg';
@@ -49,16 +48,16 @@ export const TicketCard = ({ticket}) => {
 }
 const Container = styled.div`
 //   border: 1px solid #ddd; /* Light gray border */
-//   border-radius: 5px; /* Rounded corners */
+  border-radius: 10px; /* Rounded corners */
   padding: 20px; /* Padding inside the card */
   margin: 5px 0; /* Vertical margin between cards */
   background-color: white; /* White background */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for the card */
   height: 110px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
 `;
 
 const Title = styled.div`
