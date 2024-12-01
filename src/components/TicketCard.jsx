@@ -1,11 +1,18 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import UrgenPriority from '/assets/SVG - Urgent Priority grey.svg';
 import HighPriority from '/assets/Img - High Priority.svg';
 import MediumPriority from '/assets/Img - Medium Priority.svg';
 import LowPriority from '/assets/Img - Low Priority.svg';
 import Nopriority from '/assets/No-priority.svg';
+import TodoIcon from '/assets/To-do.svg';
+import InProgressIcon from '/assets/in-progress.svg';
+import DoneIcon from '/assets/Done.svg';
+import CancelledIcon from '/assets/Cancelled.svg';
+import BacklogIcon from '/assets/Backlog.svg';
 
-export const TicketCard = ({ticket}) => {
+export const TicketCard = ({ticket, showUser, showPriority}) => {
+
     const getPriorityIcon = (priority) => {
         switch (priority) {
             case 4:
@@ -22,6 +29,25 @@ export const TicketCard = ({ticket}) => {
                 return null;
         }
     };
+
+
+  // Function to get the status icon based on task's status
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'Backlog':
+        return BacklogIcon;
+      case 'Todo':
+        return TodoIcon;
+      case 'In progress':
+        return InProgressIcon;
+      case 'Done':
+        return DoneIcon;
+      case 'Cancelled':
+        return CancelledIcon;
+      default:
+        return null;
+    }
+  };
     const capitalizeWords = (str) => {
         return str.replace(/\b\w/g, (char) => char.toUpperCase());
       };
@@ -30,27 +56,34 @@ export const TicketCard = ({ticket}) => {
         <Container>
           <Top>
           <ID>{ticket.id}</ID>
-          <User>{ticket.userId}</User>
+          {showUser && <User>{ticket.userId}</User>}
         
           </Top>
-          <Title>{ticket.title}</Title>
+          <Title>
+            <StatusIcon>
+            <img src={getStatusIcon(ticket.status)} alt={`${ticket.status} icon`} width="15" />
+
+            </StatusIcon>
+
+            <TitleText>{ticket.title}</TitleText>
+            </Title>
           <Bottom>
+          {showPriority && (
           <Priority>
             <img src={getPriorityIcon(ticket.priority)} alt="" />
 
           </Priority>
-          {/* <p><strong>Status:</strong> {ticket.status}</p> */}
+          )}
     
-          <Tag>{capitalizeWords(ticket.tag[0])}</Tag>
+          <Tag><Circle></Circle>{capitalizeWords(ticket.tag[0])}</Tag>
           </Bottom>
         </Container>
       );
 }
 const Container = styled.div`
-//   border: 1px solid #ddd; /* Light gray border */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Padding inside the card */
-  margin: 5px 0; /* Vertical margin between cards */
+  border-radius: 10px;
+  padding: 20px; /* 
+  margin: 10px 0; /* Vertical margin between cards */
   background-color: white; /* White background */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for the card */
   height: 110px;
@@ -60,21 +93,37 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
+
 const Title = styled.div`
-  margin: 0 0 10px; /* No margin on top, 10px on the bottom */
-//   font-size: 1.2em; /* Font size of the title */
-  font-weight: 500; /* Bold font weight */
-   display: -webkit-box; /* Create a flex container for text */
-  -webkit-box-orient: vertical; /* Stack text vertically */
-  -webkit-line-clamp: 2; /* Limit the text to 2 lines */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Show ellipsis when the text exceeds two lines */
+margin: 0 0 10px;
+font-weight: 500;
+display: flex;
+align-items: center; /* Align items (icon + title) horizontally */
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+overflow: hidden;
+text-overflow: ellipsis;
 `;
-  
+
+const TitleText = styled.div`
+  flex-grow: 1; /* Allow the title to take up remaining space */
+  display: -webkit-box; /* Enable multi-line truncation */
+  -webkit-box-orient: vertical; /* Define the orientation to be vertical */
+  -webkit-line-clamp: 2; /* Limit the text to 2 lines */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis when text overflows */
+  white-space: normal; /* Allow wrapping of text */
+`;
+
+const StatusIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px; /* Space between the icon and the title */
+`;
 
 const User = styled.div`
-  margin: 5px 0; /* Margin between paragraphs */
-//   font-size: 0.9em; /* Font size for the paragraph text */
+  margin: 5px 0;
   `;
 
 const Top = styled.div`
@@ -108,7 +157,7 @@ const Priority = styled.div`
 `
 const Tag = styled.div`
     border: 1px solid #e8e8e8; /* Light gray border */
-    border-radius: 0.5px; /* Rounded corners */
+    border-radius: 5px; /* Rounded corners */
     margin-left: 10px;
     font-size: 0.9em; /* Font size of the tag */
     display: flex;
@@ -116,6 +165,14 @@ const Tag = styled.div`
     align-items: center;  /* Vertically centers the text */
     padding: 5px;  /* Optional: Adds padding around the text */
 `
+const Circle = styled.div`
+  width: 12px;
+  height: 12px;
+  margin-bottom: 2px;
+  background-color: grey; /* Grey color */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 8px; /* Add some space between the circle and the tag */
+`;
 
 
 

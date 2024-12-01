@@ -12,7 +12,9 @@ export const Board = ({tickets, users, grouping, ordering}) => {
         const savedOrdering = localStorage.getItem('ordering');
         return savedOrdering ? savedOrdering : ordering; // Use localStorage value if available, else fall back to prop
       });
-   
+
+      const [showUser, setShowUser] = useState(currentGrouping !== "user");
+      const [showPriority, setShowPriority] = useState(currentGrouping !== "priority");
 
     // Load settings from localStorage on initial load
     useEffect(() => {
@@ -25,14 +27,28 @@ export const Board = ({tickets, users, grouping, ordering}) => {
 
   // Save settings to localStorage whenever they change
 
-    useEffect(() => {
-        if (currentGrouping !== undefined) {
-            localStorage.setItem('grouping', currentGrouping);
-        }
-        if (currentOrdering !== undefined) {
-            localStorage.setItem('ordering', currentOrdering);
-        }
-    }, [currentGrouping, currentOrdering]);
+  useEffect(() => {
+    // Whenever currentGrouping changes, update showUser and showPriority
+    if (currentGrouping === "user") {
+      setShowUser(false);
+      setShowPriority(true);
+    } else if (currentGrouping === "priority") {
+      setShowUser(true);
+      setShowPriority(false);
+    } else {
+      setShowUser(true);
+      setShowPriority(true);
+    }
+
+    // Save to localStorage
+    if (currentGrouping !== undefined) {
+      localStorage.setItem("grouping", currentGrouping);
+    }
+    if (currentOrdering !== undefined) {
+      localStorage.setItem("ordering", currentOrdering);
+    }
+  }, [currentGrouping, currentOrdering]);
+
 
 
     const predefinedGroups = {
@@ -159,7 +175,11 @@ export const Board = ({tickets, users, grouping, ordering}) => {
                     </GroupTitle>
                   {groupTasks.length > 0 &&
                       groupTasks.map((task) => (
-                          <TicketCard key={task.id} ticket={task} />
+                          <TicketCard 
+                          key={task.id} 
+                          ticket={task}
+                          showUser={showUser}
+                          showPriority={showPriority}/>
                       ))
                   }
               </Group>
@@ -185,6 +205,7 @@ const Group = styled.div`
   flex-direction: column;
   align-items: flex-start; /* Align content to the start */
   width: 100%;
+  gap: 20px;
 `;
 
 const GroupTitle = styled.div`

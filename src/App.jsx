@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import styled from 'styled-components';
 import { fetcher } from './utils/fetcher';
 import { Header } from './components/Header';
 import { Board } from './components/Board';
@@ -34,7 +33,7 @@ function App() {
       localStorage.setItem('ordering', ordering);
     }
   }, [grouping, ordering]);
-  
+
 
   return (
     <>
